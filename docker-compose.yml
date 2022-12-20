@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15.1
+    environment:
+      - POSTGRES_PASSWORD=password
+      - TZ=Asia/Tokyo
+      - PGTZ=Asia/Tokyo
+      - RAILS_ENV=${RAILS_ENV:-development}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    tty: true
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    depends_on:
+      - db
