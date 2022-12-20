@@ -1,24 +1,80 @@
-# README
+### 環境構築手順
+※ [Docker Desktop](https://docs.docker.jp/desktop/toc.html) がインストールされていることが前提です
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. このリポジトリをクローンする  
 
-Things you may want to cover:
+```shell
+git clone git@github.com:huro3h/study_records.git
+```
 
-* Ruby version
+2. Docker Imageの作成
 
-* System dependencies
+```shell
+docker-compose build --no-cache
+```
 
-* Configuration
+3. RailsサーバとDBサーバのコンテナを立ち上げる
 
-* Database creation
+```shell
+docker-compose up
 
-* Database initialization
+or 
 
-* How to run the test suite
+docker-compose up -d (バックグラウンドで動きます)
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+4. (ここから別のコンソールで) コンテナが立ち上がっていることを確認
 
-* Deployment instructions
+```shell
+docker ps
 
-* ...
+CONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS          PORTS                    NAMES
+33c3a30c9416   study_records-web   "entrypoint.sh /bin/…"   12 minutes ago   Up 12 minutes   0.0.0.0:3000->3000/tcp   study_records-web-1
+8ee1f08fc4a6   postgres:15.1       "docker-entrypoint.s…"   12 minutes ago   Up 12 minutes   0.0.0.0:5432->5432/tcp   study_records-db-1
+```
+
+5. Railsサーバのコンテナ内に入る
+
+```
+docker exec -it study_records-web-1 /bin/bash
+```
+
+(コンテナ内に入るとコマンドプロンプトが変わります ↓ 例)
+```
+root@33c3a30c9416:/myapp#
+```
+
+6. Railsサーバのコンテナ内で、DBの初期セットアップをする
+```shell
+root@33c3a30c9416:/myapp# bin/rails db:prepare
+
+# Created database 'study_records_development'
+# Created database 'study_records_test'
+```
+
+7. Railsサーバを立ち上げる
+```shell
+bin/rails s -b 0.0.0.0
+
+# => Booting Puma
+# => Rails 7.0.4 application starting in development
+# => Run `bin/rails server --help` for more startup options
+# Puma starting in single mode...
+# * Puma version: 5.6.5 (ruby 3.1.3-p185) ("Birdie's Version")
+# *  Min threads: 5
+# *  Max threads: 5
+# *  Environment: development
+# *          PID: 64
+# * Listening on http://0.0.0.0:3000
+# Use Ctrl-C to stop
+```
+
+8. ブラウザからアクセスしてみる
+
+  http://localhost:3000/
+
+  <img width="400" alt="ss 4" src="https://user-images.githubusercontent.com/16791696/208663764-871d5ddf-b3c0-4f75-aec5-f5c114222504.png">
+
+
+
+
