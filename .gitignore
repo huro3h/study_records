@@ -66,6 +66,9 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 
+# Ignore compiled files
+app/assets/builds/
+
 # JetBrains IDE files
 .idea/
 
