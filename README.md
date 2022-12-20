@@ -23,7 +23,7 @@ or
 docker-compose up -d (バックグラウンドで動きます)
 ```
 
-4. (ここから別のコンソールで) コンテナが立ち上がっていることを確認
+4. (※1 ここから別窓のコンソールで) コンテナが立ち上がっていることを確認
 
 ```shell
 docker ps
@@ -74,6 +74,25 @@ bin/rails s -b 0.0.0.0
   http://localhost:3000/
 
   <img width="400" alt="ss 4" src="https://user-images.githubusercontent.com/16791696/208663764-871d5ddf-b3c0-4f75-aec5-f5c114222504.png">
+
+9. (※2 ここからさらに別窓のコンソールで) JavaScript, CSSのファイルなどのassetsファイル監視用プロセスを起動しておく
+```
+docker exec -it study_records-web-1 /bin/bash
+
+root@33c3a30c9416:/myapp# bin/dev
+
+# 12:38:49 js.1   | started with pid 34
+# 12:38:49 css.1  | started with pid 35
+# 12:38:49 js.1   | yarn run v1.22.19
+# 12:38:49 css.1  | yarn run v1.22.19
+# ....
+```
+
+※1, ※2 別窓のコンソールで合計3つ動いているイメージ画像
+
+<img width="700" alt="ss 7" src="https://user-images.githubusercontent.com/16791696/208669977-e5366e47-5882-4a22-9e7d-53d839f407f1.png">
+
+
 
 
 
