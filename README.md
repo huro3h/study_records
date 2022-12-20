@@ -76,7 +76,7 @@ bin/rails s -b 0.0.0.0
   <img width="400" alt="ss 4" src="https://user-images.githubusercontent.com/16791696/208663764-871d5ddf-b3c0-4f75-aec5-f5c114222504.png">
 
 9. (※2 ここからさらに別窓のコンソールで) JavaScript, CSSのファイルなどのassetsファイル監視用プロセスを起動しておく
-```
+```shell
 docker exec -it study_records-web-1 /bin/bash
 
 root@33c3a30c9416:/myapp# bin/dev
