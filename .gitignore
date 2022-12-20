@@ -65,3 +65,9 @@ yarn-debug.log*
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+
+# JetBrains IDE files
+.idea/
+
+# log files
+log/
