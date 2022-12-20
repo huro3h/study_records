@@ -92,6 +92,7 @@ root@33c3a30c9416:/myapp# bin/dev
 
 <img width="700" alt="ss 7" src="https://user-images.githubusercontent.com/16791696/208669977-e5366e47-5882-4a22-9e7d-53d839f407f1.png">
 
+10. `develop` ブランチから `feature` ブランチを切って開発スタート
 
 
 
