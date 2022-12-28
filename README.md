@@ -79,12 +79,24 @@ bin/rails s -b 0.0.0.0
 ```shell
 docker exec -it study_records-web-1 /bin/bash
 
-root@33c3a30c9416:/myapp# bin/dev
+root@33c3a30c9416:/myapp# yarn install && bin/dev
 
-# 12:38:49 js.1   | started with pid 34
-# 12:38:49 css.1  | started with pid 35
-# 12:38:49 js.1   | yarn run v1.22.19
-# 12:38:49 css.1  | yarn run v1.22.19
+# yarn install v1.22.19
+# [1/4] Resolving packages...
+# [2/4] Fetching packages...
+# [3/4] Linking dependencies...
+# [4/4] Building fresh packages...
+# Done in 16.00s.
+# 16:50:07 js.1   | started with pid 137
+# 16:50:07 css.1  | started with pid 138
+# 16:50:07 js.1   | yarn run v1.22.19
+# 16:50:07 css.1  | yarn run v1.22.19
+# 16:50:07 js.1   | $ esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --watch
+# 16:50:07 css.1  | $ sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch
+# 16:50:08 js.1   | [watch] build finished, watching for changes...
+# 16:50:12 css.1  | Compiled app/assets/stylesheets/application.bootstrap.scss to app/assets/builds/application.css.
+# 16:50:12 css.1  | Sass is watching for changes. Press Ctrl-C to stop.
+# 16:50:12 css.1  |
 # ....
 ```
 
@@ -93,8 +105,3 @@ root@33c3a30c9416:/myapp# bin/dev
 <img width="700" alt="ss 7" src="https://user-images.githubusercontent.com/16791696/208669977-e5366e47-5882-4a22-9e7d-53d839f407f1.png">
 
 10. `develop` ブランチから `feature` ブランチを切って開発スタート
-
-
-
-
-
