@@ -1,0 +1,20 @@
+<%# flashメッセージ %>
+<% flash.each do |message_type, message| %>
+  <div class="alert alert-<%= message_type %>"><%= message %></div>
+<% end %>
+
+<%= form_with(model: @user, local: true) do |f| %>
+    
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password_digest, class: 'form-control' %>
+
+      <%# TODO 入力パスワード一致の検証とセキュアなパスワードに対応する %>
+      <!--
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmatio, class: 'form-control'%> -->
+    
+    <%= f.submit "新規登録", class: "btn btn-primary" %>
+<% end %>
