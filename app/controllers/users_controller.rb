@@ -20,6 +20,6 @@ class UsersController < ApplicationController
   private
     def user_params
       # parameterとして許可する属性
-      params.require(:user).permit(:name, :password_digest)
+      params.require(:user).permit(:name, :password, :password_confirmation)
     end
 end
