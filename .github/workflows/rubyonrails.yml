@@ -38,7 +38,7 @@ jobs:
         run: bin/rails db:schema:load
       # Add or replace test runners here
       - name: Run tests
-        run: echo "[CG-16] 自動テスト環境構築 のタスクで追加" # bin/rake
+        run: bundle exec rspec spec
 
 #  静的解析ツール(rubocop)を入れるタイミングでコメントアウトを外します
 #  lint:
