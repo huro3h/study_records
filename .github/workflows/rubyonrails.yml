@@ -35,7 +35,7 @@ jobs:
       - name: Set up database schema
         run: bin/rails db:schema:load
       - name: Assets Precompile
-        run: yarn install && bin/dev
+        run: bin/rails assets:precompile
       # Add or replace test runners here
       - name: Run tests
         run: bundle exec rspec spec
