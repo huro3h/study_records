@@ -1,13 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'rspec/rails'
 
-require 'spec/spec_helper'
+require 'spec_helper'
 require 'capybara/rspec'
+require 'capybara/rails'
 require 'rspec/rails'
 require 'factory_bot'
 
@@ -21,7 +21,7 @@ end
 
 Webdrivers.cache_time = 86400
 
-client = Selenium::WebDriver::Chrome::Remote::Http::Default.new
+client = Selenium::WebDriver::Remote::Http::Default.new
 browser_options = ::Selenium::WebDriver::Chrome::Options.new.tap do |options|
   options.args << '--headless'
   options.args << '--disable-gpu'
