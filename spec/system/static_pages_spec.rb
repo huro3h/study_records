@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'root_path', type: :system do
+RSpec.describe 'root_path', type: :system, js: true do
   describe 'StudyRecords Topページ' do
     it 'トップページにサービス名とユーザ登録ボタンが表示されていること' do
       visit root_path

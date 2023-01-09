@@ -40,6 +40,32 @@ Capybara.register_driver :headless_chrome do |app|
   )
 end
 
+Capybara.server = :puma
+Capybara.default_max_wait_time = 30 # default 2
+Capybara.disable_animation = true
+Capybara.automatic_label_click = true
+Capybara.configure do |config|
+  config.ignore_hidden_elements = true
+end
+
+# コンテナの中でchromeを立ち上げられる人用
+#
+# Capybara.register_driver :remote_chrome do |app|
+#   url = "http://chrome:4444/wd/hub"
+#   capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+#     "goog:chromeOptions" => {
+#       "args" => [
+#         "--no-sandbox",
+#         "disable-gpu",
+#         "window-size=1680,1050"
+#       ]
+#     }
+#   )
+#   Capybara::Selenium::Driver.new(app, browser: :remote, url: url, capabilities: capabilities)
+# end
+
+Selenium::WebDriver::Chrome::Service.driver_path = proc { '/usr/bin/chromedriver' } if RUBY_PLATFORM.include?('aarch64')
+
 RSpec.configure do |config|
   config.include Capybara::DSL, type: :system
   config.include Rails.application.routes.url_helpers
@@ -63,9 +89,28 @@ RSpec.configure do |config|
     driven_by :headless_chrome
   end
 
+  # コンテナの中でchromeを立ち上げられる人用
+  #
+  # config.before :each, type: :system, js: true do
+  #   driven_by :remote_chrome
+  #   Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+  #   Capybara.server_port = 3000
+  #   Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+  # end
+
   config.before :each, type: :controller do
     request.env['HTTP_HOST'] = 'localhost'
     request.env['SERVER_PORT'] = 3000
+  end
+
+  config.around do |example|
+    Rails.application.routes.default_url_options = { host: 'localhost', protocol: 'http', port: 3000 }
+    ActionMailer::Base.default_url_options = { host: 'localhost', protocol: 'http', port: 3000 }
+
+    example.run
+
+    ActionMailer::Base.deliveries.clear
+    Timecop.return
   end
 
   config.before :suite do
