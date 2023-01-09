@@ -54,15 +54,20 @@ end
 #   url = "http://chrome:4444/wd/hub"
 #   capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
 #     "goog:chromeOptions" => {
-#       "args" => [
-#         "--no-sandbox",
-#         "disable-gpu",
-#         "window-size=1680,1050"
+#       args: %w[
+#         headless
+#         disable-gpu
+#         window-size=1400,2000
+#         no-sandbox
 #       ]
 #     }
 #   )
 #   Capybara::Selenium::Driver.new(app, browser: :remote, url: url, capabilities: capabilities)
 # end
+#
+# Capybara.javascript_driver = :remote_chrome
+#
+# コンテナの中でchromeを立ち上げられる人用 - ここまで
 
 Selenium::WebDriver::Chrome::Service.driver_path = proc { '/usr/bin/chromedriver' } if RUBY_PLATFORM.include?('aarch64')
 
@@ -95,8 +100,10 @@ RSpec.configure do |config|
   #   driven_by :remote_chrome
   #   Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
   #   Capybara.server_port = 3000
-  #   Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+  #   Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:#{Capybara.server_port}"
   # end
+  #
+  # コンテナの中でchromeを立ち上げられる人用 - ここまで
 
   config.before :each, type: :controller do
     request.env['HTTP_HOST'] = 'localhost'
