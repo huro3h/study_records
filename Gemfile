@@ -54,8 +54,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'faker-japanese' # 日本語氏名、読み作成用
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'timecop'
+  gem 'selenium-webdriver'
   gem 'webdrivers'
 end
 
