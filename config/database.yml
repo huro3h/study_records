@@ -26,8 +26,9 @@ development:
   database: study_records_development
   username: postgres
   password: password
-  host: db
   port: 5432
+  host: db
+#  host: 127.0.0.1
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -64,8 +65,9 @@ test:
   database: study_records_test
   username: postgres
   password: password
-  host: db
   port: 5432
+  host: db
+#  host: 127.0.0.1
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

@@ -1,13 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'rspec/rails'
 
-require 'spec/spec_helper'
+require 'spec_helper'
 require 'capybara/rspec'
+require 'capybara/rails'
 require 'rspec/rails'
 require 'factory_bot'
 
@@ -21,7 +21,7 @@ end
 
 Webdrivers.cache_time = 86400
 
-client = Selenium::WebDriver::Chrome::Remote::Http::Default.new
+client = Selenium::WebDriver::Remote::Http::Default.new
 browser_options = ::Selenium::WebDriver::Chrome::Options.new.tap do |options|
   options.args << '--headless'
   options.args << '--disable-gpu'
@@ -40,6 +40,37 @@ Capybara.register_driver :headless_chrome do |app|
   )
 end
 
+Capybara.server = :puma
+Capybara.default_max_wait_time = 30 # default 2
+Capybara.disable_animation = true
+Capybara.automatic_label_click = true
+Capybara.configure do |config|
+  config.ignore_hidden_elements = true
+end
+
+# コンテナの中でchromeを立ち上げられる人用
+#
+# Capybara.register_driver :remote_chrome do |app|
+#   url = "http://chrome:4444/wd/hub"
+#   capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+#     "goog:chromeOptions" => {
+#       args: %w[
+#         headless
+#         disable-gpu
+#         window-size=1400,2000
+#         no-sandbox
+#       ]
+#     }
+#   )
+#   Capybara::Selenium::Driver.new(app, browser: :remote, url: url, capabilities: capabilities)
+# end
+#
+# Capybara.javascript_driver = :remote_chrome
+#
+# コンテナの中でchromeを立ち上げられる人用 - ここまで
+
+Selenium::WebDriver::Chrome::Service.driver_path = proc { '/usr/bin/chromedriver' } if RUBY_PLATFORM.include?('aarch64')
+
 RSpec.configure do |config|
   config.include Capybara::DSL, type: :system
   config.include Rails.application.routes.url_helpers
@@ -48,6 +79,7 @@ RSpec.configure do |config|
     config.include ::Rails::Controller::Testing::TestProcess, type: type
     config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
     config.include ::Rails::Controller::Testing::Integration, type: type
+    # config.include ActionDispatch::Integration::RequestHelpers, type: type
   end
 
   config.include FactoryBot::Syntax::Methods # FactoryBot. の接頭辞を省略する
@@ -63,9 +95,30 @@ RSpec.configure do |config|
     driven_by :headless_chrome
   end
 
+  # コンテナの中でchromeを立ち上げられる人用
+  #
+  # config.before :each, type: :system, js: true do
+  #   driven_by :remote_chrome
+  #   Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+  #   Capybara.server_port = 3000
+  #   Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:#{Capybara.server_port}"
+  # end
+  #
+  # コンテナの中でchromeを立ち上げられる人用 - ここまで
+
   config.before :each, type: :controller do
     request.env['HTTP_HOST'] = 'localhost'
     request.env['SERVER_PORT'] = 3000
+  end
+
+  config.around do |example|
+    Rails.application.routes.default_url_options = { host: 'localhost', protocol: 'http', port: 3000 }
+    ActionMailer::Base.default_url_options = { host: 'localhost', protocol: 'http', port: 3000 }
+
+    example.run
+
+    ActionMailer::Base.deliveries.clear
+    Timecop.return
   end
 
   config.before :suite do
