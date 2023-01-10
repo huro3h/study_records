@@ -4,11 +4,11 @@
 
 <div id="subjects">
   <% @subjects.each do |subject| %>
-    <%= render subject %>
+    <%= render @subjects %>
     <p>
       <%= link_to "Show this subject", subject %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New subject", new_subject_path %>
+<%= link_to "科目を追加する", new_subject_path %>
