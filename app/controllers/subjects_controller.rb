@@ -27,7 +27,7 @@ class SubjectsController < ApplicationController
     if @subject.save
       redirect_to @subject, notice: "Subject was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
@@ -54,6 +54,6 @@ class SubjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def subject_params
-      params.require(:subject).permit(:subject)
+      params.require(:subject).permit(:name)
     end
 end
