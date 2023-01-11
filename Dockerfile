@@ -9,7 +9,7 @@ RUN apt update -qq \
     && apt install -y unzip  \
     && apt install -y chromium \
     && apt install -y chromium-driver \
-    && apt install -y libidn11-dev \
+    && apt install -y libidn11-dev
 
 # 最新のyarnを入れるために公開鍵を登録
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
