@@ -9,8 +9,10 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
   <body>
+    <%= render partial: 'shared/header' %>
     <%= content_tag :div, class: "page-contents #{style_class_namespace}" do %>
       <%= yield %>
     <% end %>
+    <%= render partial: 'shared/footer' %>
   </body>
 </html>
