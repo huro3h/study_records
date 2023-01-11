@@ -10,9 +10,11 @@
   </head>
   <body>
     <%= render partial: 'shared/header' %>
-    <%= content_tag :div, class: "page-contents #{style_class_namespace}" do %>
-      <%= yield %>
-    <% end %>
+    <div class="container mt-4">
+      <%= content_tag :div, class: "page-contents #{style_class_namespace}" do %>
+        <%= yield %>
+      <% end %>
+    </div>
     <%= render partial: 'shared/footer' %>
   </body>
 </html>
