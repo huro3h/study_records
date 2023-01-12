@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_09_151820) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_12_004854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "study_records", force: :cascade do |t|
+    t.date "study_date", null: false
+    t.time "study_time", null: false
+    t.bigint "user_id", null: false
+    t.bigint "subject_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_study_records_on_subject_id"
+    t.index ["user_id"], name: "index_study_records_on_user_id"
+  end
 
   create_table "subjects", force: :cascade do |t|
     t.string "name"
@@ -28,4 +39,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_151820) do
     t.string "email"
   end
 
+  add_foreign_key "study_records", "subjects"
+  add_foreign_key "study_records", "users"
 end
