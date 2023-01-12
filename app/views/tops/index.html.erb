@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-sm-3 d-inline-flex">
+    <div class="card border border-2" style="padding: 20px">
+      <%= image_tag 'sample_user.png', class: 'h-100' %>
+    </div>
+  </div>
+  <div class="col-sm-5 d-inline-flex">
+    <div class="card">
+      <div class="card-header">
+        ユーザー名
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>ここにテキスト ここにテキスト ここにテキスト ここに</p>
+          <p>ここにテキスト ここにテキスト ここにテキスト ここに</p>
+          <p>ここにテキスト ここにテキスト ここにテキスト ここに</p>
+          <p>ここにテキスト ここにテキスト ここにテキスト ここに</p>
+          <p>ここにテキスト ここにテキスト ここにテキスト ここに</p>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 d-inline-flex">
+    <div class="card">
+      <%= image_tag 'sample_graph.png', class: %>
+    </div>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-sm-8 d-inline-flex">
+    <div class="card border border-0 w-100">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">日付</th>
+          <th scope="col">科目</th>
+          <th scope="col">勉強時間(minutes)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% subjects_names = Subject.all.pluck(:name) %>
+        <% (3..12).to_a.sample.times do |index| %>
+          <tr>
+            <th scope="row"><%= index +1 %></th>
+            <td><%= Time.current.ago(index.days).strftime("%F") %></td>
+            <td><%= subjects_names.sample %></td>
+            <td><%= (45..180).to_a.sample %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-sm-4 d-inline-flex">
+    <div class="card border border-0 w-100">
+      <%= link_to '今日の学習を記録する', '#', class: 'btn btn-primary' %>
+      <%= link_to '教科を新しく登録する', new_subject_path, class: 'btn btn-primary mt-3' %>
+      <%= link_to 'ログアウト', root_path, class: 'btn btn-secondary mt-4' %>
+    </div>
+  </div>
+</div>
