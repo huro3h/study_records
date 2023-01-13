@@ -24,14 +24,29 @@ RSpec.describe 'root_path', type: :system, js: true do
   #   }
   #   let!(:subject) { create(:subject, name: 'コラボレイティブ開発特論') }
   #
+  #   let(:another_study_record) {
+  #     create(:study_record, user: create(:user, name: '他人太郎'),
+  #       study_date: Time.current, study_time: Time.new(2023, 1, 1, 1, 30, 0), subject: subject)
+  #   }
+  #
   #   it 'ユーザに紐づく学習記録が表示されていること' do
   #     # ログイン処理をここに書く
   #     visit tops_path
+  #     expect(page).to have_current_path tops_path
   #
   #     expect(page).to have_content 'テスト太郎' # ユーザ名
   #     expect(page).to have_content 'コラボレイティブ開発特論' # 教科名
   #     expect(page).to have_content '2023-01-04' # 記録日
   #     expect(page).to have_content '2:30' # 学習時間
+  #   end
+  #
+  #   it '他ユーザの学習記録は表示されないこと' do
+  #     visit tops_path
+  #     expect(page).to have_current_path tops_path
+  #
+  #     # 他ユーザの学習記録
+  #     expect(page).to_not have_content '2023-01-01'
+  #     expect(page).to_not have_content '1:30'
   #   end
   # end
 end
