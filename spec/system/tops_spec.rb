@@ -10,7 +10,7 @@ RSpec.describe 'root_path', type: :system, js: true do
     # TODO: リンク作成後に修正
     # it '今日の学習を記録するリンクが表示されていること' do
     #   visit tops_path
-    #   expect(page).to have_link '今日の学習を記録する', href: new_subject_path
+    #   expect(page).to have_link '今日の学習を記録する', href: new_study_record_path
     # end
   end
 
