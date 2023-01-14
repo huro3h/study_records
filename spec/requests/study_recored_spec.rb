@@ -31,13 +31,13 @@ RSpec.describe StudyRecordsController, type: :request do
       context "登録項目に不備がある場合" do
         it "ステータス422が返ること" do
             post study_records_path params: {
-                study_record: { user_id: nil, subject_id: nil, study_date: "2023/01/01", study_time: nil }
+                study_record: { user_id: nil, subject_id: nil, study_date: "2023/01/01", study_time: "00:00" }
             }
             expect(response.status).to eq 422
             expect(response.body).to include 'The form contains 3 errors.'
             expect(response.body).to include 'User must exist'
             expect(response.body).to include 'Subject must exist'
-            expect(response.body).to include 'Study time can&#39;t be blank'
+            expect(response.body).to include 'Study time must be greater than 0'
         end
       end
     end

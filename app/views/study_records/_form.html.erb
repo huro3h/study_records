@@ -7,11 +7,11 @@
     <%= form.label :subject_id %>
     <%= form.collection_select :subject_id, Subject.all, :id, :name, {prompt: ""}, {class: "form-control input-sm"} %>
 
-    <%= form.label :study_date %>
-    <%= form.date_field :study_date, value: Time.now.strftime("%Y-%m-%d"), class: 'form-control' %>
-
-    <%= form.label :study_time %>
-    <%= form.time_field :study_time, value: '00:00', class: 'form-control' %>
+    <%= form.label :study_date, 'Study Date' %>
+    <%= form.date_field :study_date, value: Time.now.strftime("%Y-%m-%d"), required: true, class: 'form-control' %>
+  
+    <%= form.label :study_time, 'Study Time' %>
+    <%= form.time_field :study_time, value: '00:00', required: true, class: 'form-control' %>
 
     <br>
     <%= form.submit "新規登録", class: "btn btn-primary" %>

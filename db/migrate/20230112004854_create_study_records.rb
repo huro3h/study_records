@@ -1,8 +1,8 @@
 class CreateStudyRecords < ActiveRecord::Migration[7.0]
   def change
     create_table :study_records do |t|
-      t.date :study_date, null:false
-      t.time :study_time, null:false
+      t.datetime :study_date, null:false
+      t.integer :study_time, null:false
       t.references :user, null: false, foreign_key: true
       t.references :subject, null: false, foreign_key: true
 

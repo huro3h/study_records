@@ -15,8 +15,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_12_004854) do
   enable_extension "plpgsql"
 
   create_table "study_records", force: :cascade do |t|
-    t.date "study_date", null: false
-    t.time "study_time", null: false
+    t.datetime "study_date", null: false
+    t.integer "study_time", null: false
     t.bigint "user_id", null: false
     t.bigint "subject_id", null: false
     t.datetime "created_at", null: false
