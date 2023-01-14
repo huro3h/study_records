@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'root_path', type: :system, js: true do
+RSpec.describe 'tops_path', type: :system, js: true do
   describe 'ユーザTopページ' do
     it '教科マスタを登録するリンクが表示され、リンクから登録ページに正常に遷移できること' do
       visit tops_path
