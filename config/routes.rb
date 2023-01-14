@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :tops, only: :index
   resources :users
   resources :subjects
+  resources :study_records
 end
