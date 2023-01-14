@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-
   </head>
-
   <body>
-    <%= yield %>
+    <%= render partial: 'shared/header' %>
+    <div class="container mt-4">
+      <%= content_tag :div, class: "page-contents #{style_class_namespace}" do %>
+        <%= yield %>
+      <% end %>
+    </div>
+    <%= render partial: 'shared/footer' %>
   </body>
 </html>

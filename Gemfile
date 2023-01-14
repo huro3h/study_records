@@ -62,6 +62,12 @@ group :development, :test do
 end
 
 group :development do
+  # 開発中のエラー画面を見やすくする
+  gem "better_errors"
+
+  # モデルファイルにスキーマ情報をコメントアウトの形で載せる
+  gem 'annotate'
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
