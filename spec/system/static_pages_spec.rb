@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'root_path', type: :system, js: true do
   describe 'StudyRecords Topページ' do
-    it 'トップページにサービス名とユーザ登録ボタンが表示されていること' do
+    it 'トップページにサービス名とユーザ登録ボタンとログインページボタンが表示されていること' do
       visit root_path
       expect(page).to have_content 'StudyRecords Topページ'
       expect(page).to have_button 'ユーザー登録'
+      expect(page).to have_button 'ログインページ'
     end
   end
 end
