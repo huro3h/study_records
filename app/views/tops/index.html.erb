@@ -39,13 +39,12 @@
         </tr>
         </thead>
         <tbody>
-        <% subjects_names = Subject.all.pluck(:name) %>
-        <% (3..12).to_a.sample.times do |index| %>
+        <% @study_records.each.with_index(1) do |study_record, index| %>
           <tr>
-            <th scope="row"><%= index +1 %></th>
-            <td><%= Time.current.ago(index.days).strftime("%F") %></td>
-            <td><%= subjects_names.sample %></td>
-            <td><%= (45..180).to_a.sample %></td>
+            <th scope="row"><%= index %></th>
+            <td><%= study_record.study_date.strftime("%F") %></td>
+            <td><%= study_record.subject.name%></td>
+            <td><%= study_record.study_time %></td>
           </tr>
         <% end %>
         </tbody>
