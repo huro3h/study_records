@@ -70,7 +70,8 @@ Webdrivers.cache_time = 86400
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 RSpec.configure do |config|
-  include SystemSpecHelpers
+  config.include SystemSpecHelpers
+  config.include SessionsHelper
 
   config.include Capybara::DSL, type: :system
   config.include Rails.application.routes.url_helpers
@@ -79,6 +80,7 @@ RSpec.configure do |config|
     config.include ::Rails::Controller::Testing::TestProcess, type: type
     config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
     config.include ::Rails::Controller::Testing::Integration, type: type
+    config.include RequestSpecHelpers, type: type
     # config.include ActionDispatch::Integration::RequestHelpers, type: type
   end
 
