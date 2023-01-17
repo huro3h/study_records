@@ -9,7 +9,7 @@ RSpec.describe 'tops_path', type: :system, js: true do
       click_link  '教科を新しく登録する'
 
       expect(page).to have_current_path new_subject_path
-      expect(page).to have_content 'New subject'
+      expect(page).to have_content '科目を追加する'
     end
 
     it '今日の学習を記録するリンクが表示され、リンクから学習記録ページに正常に遷移できること' do
