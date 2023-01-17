@@ -11,8 +11,6 @@ require 'capybara/rails'
 require 'rspec/rails'
 require 'factory_bot'
 
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
-
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -69,7 +67,12 @@ Webdrivers.cache_time = 86400
 # コンテナの中でchromeを立ち上げられる人用 - ここまで
 
 
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+
 RSpec.configure do |config|
+  config.include SystemSpecHelpers
+  config.include SessionsHelper
+
   config.include Capybara::DSL, type: :system
   config.include Rails.application.routes.url_helpers
   config.include ActionDispatch::TestProcess::FixtureFile
@@ -77,6 +80,7 @@ RSpec.configure do |config|
     config.include ::Rails::Controller::Testing::TestProcess, type: type
     config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
     config.include ::Rails::Controller::Testing::Integration, type: type
+    config.include RequestSpecHelpers, type: type
     # config.include ActionDispatch::Integration::RequestHelpers, type: type
   end
 
