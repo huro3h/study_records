@@ -11,42 +11,39 @@ require 'capybara/rails'
 require 'rspec/rails'
 require 'factory_bot'
 
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
-
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
-Webdrivers.cache_time = 86400
-
 client = Selenium::WebDriver::Remote::Http::Default.new
 browser_options = ::Selenium::WebDriver::Chrome::Options.new.tap do |options|
-  options.args << '--headless'
-  options.args << '--disable-gpu'
-  options.args << '--disable-site-isolation-trials'
-  options.args << '--no-sandbox'
-  options.args << '--disable-dev-shm-usage'
-  options.args << '--window-size=1280,720'
+  options.add_argument('--disable-gpu')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--disable-site-isolation-trials')
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--window-size=1920,1080')
 end
 
 Capybara.register_driver :headless_chrome do |app|
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    capabilities: browser_options,
-    http_client: client
-  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: browser_options, http_client: client)
 end
 
-Capybara.server = :puma
-Capybara.default_max_wait_time = 30 # default 2
-Capybara.disable_animation = true
 Capybara.automatic_label_click = true
+Capybara.disable_animation = true
+Capybara.server = :puma
+
 Capybara.configure do |config|
   config.ignore_hidden_elements = true
 end
+
+if RUBY_PLATFORM.include?('aarch64')
+  Selenium::WebDriver::Chrome::Service.driver_path = proc { '/usr/bin/chromedriver' }
+end
+
+Webdrivers.cache_time = 86400
 
 # コンテナの中でchromeを立ち上げられる人用
 #
@@ -69,9 +66,13 @@ end
 #
 # コンテナの中でchromeを立ち上げられる人用 - ここまで
 
-Selenium::WebDriver::Chrome::Service.driver_path = proc { '/usr/bin/chromedriver' } if RUBY_PLATFORM.include?('aarch64')
+
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 RSpec.configure do |config|
+  config.include SystemSpecHelpers
+  config.include SessionsHelper
+
   config.include Capybara::DSL, type: :system
   config.include Rails.application.routes.url_helpers
   config.include ActionDispatch::TestProcess::FixtureFile
@@ -79,6 +80,7 @@ RSpec.configure do |config|
     config.include ::Rails::Controller::Testing::TestProcess, type: type
     config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
     config.include ::Rails::Controller::Testing::Integration, type: type
+    config.include RequestSpecHelpers, type: type
     # config.include ActionDispatch::Integration::RequestHelpers, type: type
   end
 

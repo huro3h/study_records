@@ -1,5 +1,6 @@
 class SubjectsController < ApplicationController
   before_action :set_subject, only: %i[ show edit update destroy ]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
 
   # GET /subjects
   def index

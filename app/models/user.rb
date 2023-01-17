@@ -14,4 +14,7 @@ class User < ApplicationRecord
     validates :email, uniqueness: true, presence: true, length: { maximum: 255 }
     validates :name, presence: true, length: { maximum: 20 }
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+    has_many :study_records, dependent: :destroy
+    has_many :favorites, dependent: :destroy
 end
