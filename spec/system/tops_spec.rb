@@ -34,15 +34,15 @@ RSpec.describe 'tops_path', type: :system, js: true do
   end
 
   describe 'ユーザの学習記録' do
-    let!(:subject) { create(:subject, name: 'コラボレイティブ開発特論') } # 表示される教科名
+    let!(:subject) { create(:subject, name: 'コラボレイティブ開発特論') } # 画面に表示される教科名のデータ
 
-    # ログインするユーザとTopページに表示される学習記録
-    let!(:user) { create(:user, name: 'テスト太郎') } # ログインするユーザ
+    # ログインするユーザとTopページに表示される学習記録のテスト用データを作成
+    let!(:user) { create(:user, name: 'テスト太郎') } # ログインするユーザのデータ
     let!(:study_record) {
       create(:study_record, user: user, subject: subject, study_date: Time.new(2023, 1, 16), study_time: 120)
     }
 
-    # 他ユーザの学習記録。ログインしているユーザ以外の学習記録は、ユーザTopページに表示されないことを確認する為
+    # 他ユーザの学習記録。ログインしているユーザ以外の学習記録は、ユーザTopページに表示されないことを確認する為にデータを作っています
     let!(:another_user) { create(:user, name: '他人太郎') }
     let!(:another_study_record) {
       create(:study_record, user: another_user, subject: subject, study_date: Time.new(2023, 1, 11), study_time: 1000)
