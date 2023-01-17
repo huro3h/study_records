@@ -2,24 +2,34 @@ require 'rails_helper'
 
 RSpec.describe 'tops_path', type: :system, js: true do
   describe 'ユーザTopページ' do
-    it '教科マスタを登録するリンクが表示され、リンクから登録ページに正常に遷移できること' do
-      visit tops_path
-      expect(page).to have_link '教科を新しく登録する', href: new_subject_path
+    
+    context "ログインしている場合" do
+      let!(:user) { create(:user) }
 
-      click_link  '教科を新しく登録する'
+      before do
+        visit root_path
+        # ログインフォームよりログイン
+        log_in_with(user)
+      end
+    
+      it '教科マスタを登録するリンクが表示され、リンクから登録ページに正常に遷移できること' do
+        expect(page).to have_link '教科を新しく登録する', href: new_subject_path
 
-      expect(page).to have_current_path new_subject_path
-      expect(page).to have_content 'New subject'
-    end
+        click_link  '教科を新しく登録する'
 
-    it '今日の学習を記録するリンクが表示され、リンクから学習記録ページに正常に遷移できること' do
-      visit tops_path
-      expect(page).to have_link '今日の学習を記録する', href: new_study_record_path
+        expect(page).to have_current_path new_subject_path
+        expect(page).to have_content '科目を追加する'
+      end
 
-      click_link '今日の学習を記録する'
+      it '今日の学習を記録するリンクが表示され、リンクから学習記録ページに正常に遷移できること' do
+        expect(page).to have_link '今日の学習を記録する', href: new_study_record_path
 
-      expect(page).to have_current_path new_study_record_path
-      expect(page).to have_content '勉強時間を記録'
+        click_link '今日の学習を記録する'
+
+        expect(page).to have_current_path new_study_record_path
+        expect(page).to have_content '勉強時間を記録'
+      end
+
     end
   end
 
