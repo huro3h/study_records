@@ -1,9 +1,6 @@
 <%= form_with(model: @study_record) do |form| %>
   <%= render 'shared/error_messages', object: @study_record %>
 
-    <%= form.label :user_id %>
-    <%= form.collection_select :user_id, User.all, :id, :name, {prompt: ""}, {class: "form-control input-sm"} %>
-
     <%= form.label :subject_id %>
     <%= form.collection_select :subject_id, Subject.all, :id, :name, {prompt: ""}, {class: "form-control input-sm"} %>
 
