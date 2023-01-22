@@ -6,8 +6,8 @@ class StudyRecordsController < ApplicationController
     end
 
     def create
+        @study_record = current_user.study_records.build(study_recored_params)
 
-        @study_record = StudyRecord.new(study_recored_params)
         if @study_record.save
             redirect_to tops_path
         else
