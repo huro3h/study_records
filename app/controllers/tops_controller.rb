@@ -3,6 +3,7 @@ class TopsController < ApplicationController
 
   def index
     set_study_records
+    set_study_records_for_chart
   end
 
   private
@@ -10,5 +11,9 @@ class TopsController < ApplicationController
   def set_study_records
     user = current_user
     @study_records = user.study_records.preload(:subject).order(study_date: :desc).order(id: :desc)
+  end
+
+  def set_study_records_for_chart
+    @data = current_user.study_records.grouped_by_date.sum(:study_time).map(&:to_a)
   end
 end
