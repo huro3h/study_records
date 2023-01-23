@@ -21,4 +21,6 @@ class StudyRecord < ApplicationRecord
 
   validates :study_date, presence: true
   validates :study_time, presence: true, numericality: {only_integer: true, greater_than: 0}
+
+  scope :grouped_by_date, -> { group("DATE(study_date)") }
 end
