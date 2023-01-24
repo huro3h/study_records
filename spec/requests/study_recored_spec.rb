@@ -4,18 +4,15 @@ RSpec.describe StudyRecordsController, type: :request do
     describe 'GET #new' do
       context "ログインしていない場合" do
         before do
-          # TODO テストするべきパスが異なる (CG-56：ログインしていないときのルーティング制限で修正予定)
-          get tops_path
+          get new_study_record_path
         end
 
         it 'ステータス302が返ること' do
           expect(response.status).to eq 302
         end
 
-        it 'ルートにリダイレクトされログインして下さいのメッセージが表示されること' do
+        it 'ルートにリダイレクトされること' do
           expect(response).to redirect_to('/')
-          # TODO できればリダイレクト先のbodyがみたい
-          # expect(response.body).to include 'ログインして下さい'
         end
 
       end
