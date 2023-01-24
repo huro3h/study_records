@@ -54,6 +54,8 @@ RSpec.describe SubjectsController, type: :request do
     #科目登録時
     describe "POST #create" do
         let!(:user) { create(:user) }
+        #テストデータ
+        let!(:subject) { create(:subject, name: 'コラボレイティブ開発特論') }
         before do
           log_in(user)
           get new_subject_path
@@ -68,9 +70,9 @@ RSpec.describe SubjectsController, type: :request do
 
         context "登録に異常があった場合" do
             it "ステータス422が返ること" do
-        #         post subjects_path params: { subject: { name: 'コラボレイティブ開発特論' } }
-        #         expect(response.status).to eq 422
-        #         expect(response.body).to include 'The form contains 1 error.'
+                post subjects_path params: { subject: { name: 'コラボレイティブ開発特論' } }
+                expect(response.status).to eq 422
+                expect(response.body).to include 'The form contains 1 error.'
             end
         end
     end
