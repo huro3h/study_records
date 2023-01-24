@@ -66,13 +66,13 @@ RSpec.describe SubjectsController, type: :request do
             end
         end
 
-        # context "登録に異常があった場合" do
-        #     it "ステータス422が返ること" do
+        context "登録に異常があった場合" do
+            it "ステータス422が返ること" do
         #         post subjects_path params: { subject: { name: 'コラボレイティブ開発特論' } }
         #         expect(response.status).to eq 422
         #         expect(response.body).to include 'The form contains 1 error.'
-        #     end
-        # end
+            end
+        end
     end
 
     #科目登録後 
