@@ -26,7 +26,7 @@ class SubjectsController < ApplicationController
     @subject = Subject.new(subject_params)
 
     if @subject.save
-      redirect_to @subject, notice: "Subject was successfully created."
+      redirect_to @subject, notice: "科目が追加されました"
     else
       render 'new', status: :unprocessable_entity
     end
