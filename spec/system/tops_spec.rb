@@ -69,4 +69,29 @@ RSpec.describe 'tops_path', type: :system, js: true do
       expect(page).to_not have_content 1000
     end
   end
+
+  describe '学習記録の削除' do
+    let!(:subject) { create(:subject, name: 'コラボレイティブ開発特論') }
+    let!(:user) { create(:user) }
+    let!(:study_record) {
+      create(:study_record, user: user, subject: subject)
+    }
+
+    before do
+      log_in_with(user)
+    end
+
+    it '削除ボタンで学習記録を削除することができる' do
+      expect(page).to have_current_path tops_path
+
+      expect(page).to have_content 'コラボレイティブ開発特論'
+      click_on '削除'
+
+      # JavaScriptのalertで表示される確認ダイアログ。accept_confirmでOKをクリックする
+      expect(page.accept_confirm).to include '本当に削除してよろしいですか?'
+      expect(page).to have_content '学習記録を削除しました。'
+
+      expect(page).to_not have_content 'コラボレイティブ開発特論'
+    end
+  end
 end

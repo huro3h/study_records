@@ -1,6 +1,6 @@
 class SubjectsController < ApplicationController
   before_action :set_subject, only: %i[ show edit update destroy ]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:index, :new, :edit, :update, :destroy]
 
   # GET /subjects
   def index
@@ -26,7 +26,7 @@ class SubjectsController < ApplicationController
     @subject = Subject.new(subject_params)
 
     if @subject.save
-      redirect_to @subject, notice: "Subject was successfully created."
+      redirect_to @subject, notice: "科目が追加されました"
     else
       render 'new', status: :unprocessable_entity
     end

@@ -1,3 +1,6 @@
+<% flash.each do |message_type, message| %>
+  <div class="alert alert-<%= message_type %>"><%= message %></div>
+<% end %>
 <div class="row">
   <div class="col-sm-3 d-inline-flex">
     <div class="card border border-2" style="padding: 20px">
@@ -34,6 +37,7 @@
           <th scope="col">日付</th>
           <th scope="col">科目</th>
           <th scope="col">勉強時間(minutes)</th>
+          <th scope="col">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +47,17 @@
             <td><%= study_record.study_date.strftime("%F") %></td>
             <td><%= study_record.subject.name%></td>
             <td><%= study_record.study_time %></td>
+            <td>
+              <%= button_to '削除', study_record,
+                class: 'btn btn-sm btn-danger',
+                method: :delete,
+                form: {
+                  data: {
+                    turbo_confirm: "日付: #{study_record.study_date.strftime('%F')}\n教科名: #{study_record.subject.name}\n勉強時間: #{study_record.study_time} 分\nを本当に削除してよろしいですか?"
+                  }
+                }
+              %>
+          </td>
           </tr>
         <% end %>
         </tbody>

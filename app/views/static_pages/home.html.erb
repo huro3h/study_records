@@ -1,10 +1,13 @@
-<h1>StudyRecords Topページ</h1>
+<h1>StudyRecords</h1>
 <% flash.each do |message_type, message| %>
     <div class="alert alert-<%= message_type %>"><%= message %></div>
 <% end %>
-<%=link_to(new_user_path) do %>
- <button class="btn btn-secondary btn-lg" >ユーザー登録</button>
-<%end%>
-<%=link_to(login_path) do %>
- <button class="btn btn-secondary btn-lg" >ログインページ</button>
+
+<% if not logged_in? %>
+    <%=link_to(new_user_path) do %>
+        <button class="btn btn-secondary btn-lg" >ユーザー登録</button>
+    <%end%>
+    <%=link_to(login_path) do %>
+        <button class="btn btn-secondary btn-lg" >ログインページ</button>
+    <%end%>
 <%end%>
